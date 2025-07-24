@@ -1,0 +1,76 @@
+Throat.Profile = 1
+Throat.Diameter = 40
+Throat.Angle = 30; guess at exit angle
+Coverage.Angle = 60
+Length = 26
+
+Morph.TargetWidth = 176
+Morph.TargetHeight = 126
+
+Morph.TargetShape = 1
+
+Report = {{
+ Title = "rect-60-body"
+ PolarData = "SPL"
+ NormAngle = 0
+ Width = 1024
+ Height = 768
+}}
+
+; -------------------------------------------------------
+; Mesh Setting
+; -------------------------------------------------------
+
+Mesh.InterfaceResolution = 7.0 ; [mm]
+Mesh.InterfaceOffset = 26.0 ; [mm]
+Mesh.LengthSegments = 24
+Mesh.AngularSegments = 64
+Mesh.ThroatResolution = 7
+Mesh.SubdomainSlices =            ; intentionally empty value (no subdomains)
+
+Mesh.Enclosure = {{
+  Spacing = 3,3,3,3
+  Depth = 32
+  EdgeRadius = 3
+  EdgeType = 1
+  FrontResolution = 7,7,7,7
+  BackResolution = 14,14,14,14
+}}
+
+;Source.Velocity = 1 ; move in normal direction
+Source.Velocity = 2 ; move in axial direction
+
+; RST28F-4 calibration dimensions
+Source.Contours = {{
+zoff -4
+cpoint c1 -{c1:.1f} 0; all
+
+point p1 {p1x:.1f} 0 5
+point p2 {p2x:.1f} {p2y:.1f} 5
+point p3 0 {p3y:.1f} 5
+point p4 0 20 5
+
+arc p1 c1 p2 0.0
+arc p2 c1 p3 1
+line p3 p4 0.5
+line p4 WG0 0
+}}
+
+;ABEC.SimType = 1 ; 1 = Infinite Baffle | 2 free standing
+ABEC.SimType = {SimType}
+ABEC.Abscissa = 2 ; 1=log | 2=linear
+ABEC.f1 = 700 ; [Hz]
+ABEC.f2 = 24000 ; [Hz]
+ABEC.MeshFrequency = 15000
+ABEC.NumFrequencies = 48
+
+ABEC.Polars:SPL = {{
+ MapAngleRange = 0,90,19 ; first angle, last angle, number of points
+ NormAngle = 0 ; normalization angle [deg]
+ Distance = 1 ; [m]
+ Offset = 26 ; [mm]
+ Curves = 0, 10, 20, 30, 40, 50, 60, 70, 80, 90
+}}
+
+Output.STL = 0
+Output.ABECProject = 1

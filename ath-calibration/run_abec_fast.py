@@ -47,10 +47,10 @@ def process_abec_folders(base_directory, program_path):
             # app = Application(backend='uia').start(command)
             app = Application().start(command)
             # app = Application().connect(title_re=r'ABEC3')
-            window = None
-            window = app.window(title_re = r'ABEC3')
+            window = app.top_window() # seems to work if window is not focused
+            # window = app.window(title_re = r'ABEC3')
             print(f'Got ABEC3 window')
-            window.set_focus()
+            # window.set_focus()
             print(f'Turn off VACS output')
             window.menu_select('Spectra -> Output ways VCAS -> Off')
             print("Starting solver")
